@@ -10,8 +10,7 @@ export class ClienteController {
 
     async cadastrar(req: Request, res: Response) {
         try {
-            const { nome, email, senha } = req.body;
-            const cliente = await this.clienteService.criarCliente(nome, email, senha);
+            const cliente = await this.clienteService.criarCliente(req.body);
             res.status(201).json(cliente);
         } catch (error: any){
             res.status(400).json({ erro: error.message });

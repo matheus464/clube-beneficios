@@ -11,21 +11,28 @@ export class ClienteService {
         this.clienteRepo = new ClienteRepository();
     }
 
-    async criarCliente(nome: string, email: string, senha: string): Promise<Cliente> {
-        const clientExistente = await this.clienteRepo.buscarPorEmail(email);
-        if (clientExistente) throw new Error("email já cadastrado");
-
-        const senhaCriptografada = await bcrypt.hash(senha, 10);
-        const novoCliente = new Cliente();
-        Object.assign(novoCliente, { nome, email, senha: senhaCriptografada});
-
-        const clienteSalvo = await this.clienteRepo.salvar(novoCliente);
-        if (!clienteSalvo){
-            throw new Error("Falha para salvar cliente")
+    async criarCliente(dados: { nome: string; email: string; senha: string; tipoUsuario?: string }): Promise<Cliente | null> {
+        if (!dados.senha) {
+            throw new Error("Senha é obrigatória");
         }
 
-        return clienteSalvo;
+        const clienteExistente = await this.clienteRepo.buscarPorEmail(dados.email);
+        if (clienteExistente !== null) {
+            throw new Error("Email já cadastrado");
+        }
+
+        const senhaCriptografada = await bcrypt.hash(dados.senha, 10);
+        const novoCliente = new Cliente();
+        Object.assign(novoCliente, {
+            nome: dados.nome,
+            email: dados.email,
+            senha: senhaCriptografada,
+            tipoUsuario: dados.tipoUsuario || "cliente"
+        });
+
+        return this.clienteRepo.salvar(novoCliente);
     }
+
 
     async listarCliente(): Promise<Cliente[]> {
         return this.clienteRepo.listarTodos();
