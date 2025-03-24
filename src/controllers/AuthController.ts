@@ -10,7 +10,7 @@ export class AuthController {
         if (!email || !senha) {
             return res.status(400).json( { erro: "Email e senha são obrigatórios" });
         }
-
+        
         try {
             const { token, cliente } = await this.authService.autenticar(email, senha);
             return res.status(200).json({

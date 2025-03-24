@@ -4,7 +4,6 @@ import { CompraService } from "../services/CompraService";
 
 export class PagamentoController {
     private compraService = new CompraService();
-
     async pagar(req: AuthRequest, res: Response) {
         try {
            const clienteId = req.user.id;

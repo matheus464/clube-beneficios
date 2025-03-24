@@ -1,22 +1,23 @@
-import { Compra } from "../entities/Compra";
 import { CompraRepository } from "../repositories/CompraRepository";
 import { ClienteRepository } from "../repositories/ClienteRepository";
 import { ProdutoRepository } from "../repositories/ProdutoRepository";
 import { Cliente } from "../entities/Cliente";
 import { Produto } from "../entities/Produto";
-
+import { CompraDTO } from "../dtos/CompraDTO";
+import { Compra } from "../entities/Compra";
 
 export class CompraService {
     private compraRepo = new CompraRepository();
     private clienteRepo = new ClienteRepository();
     private produtoRepo = new ProdutoRepository();
 
-    async registrarCompra(clienteId: number, produtosIds: number[]): Promise<Compra> {
+    async registrarCompra(clienteId: number, dados: CompraDTO): Promise<Compra> {
+        const { produtosIds } = dados;
+        
         const cliente = await this.clienteRepo.buscarPorId(clienteId);
         if (!cliente) throw new Error("Cliente não encontrado");
 
         const produtos = await this.produtoRepo.buscarPorIds(produtosIds);
-
         if (produtos.length !== produtosIds.length){
             throw new Error("Um ou mais produtos não foram encontrados");
         }
