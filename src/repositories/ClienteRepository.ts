@@ -13,6 +13,10 @@ export class ClienteRepository {
         return this.repo.save(cliente);
     }
 
+    async buscarPorId(id: number): Promise<Cliente | null> {
+        return this.repo.findOne( { where: { id }});
+    }
+
     async buscarPorEmail(email: string): Promise<Cliente | null> {
         return this.repo.findOne({ where: { email } });
     }

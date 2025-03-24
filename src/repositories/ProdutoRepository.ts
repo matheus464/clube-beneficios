@@ -9,6 +9,10 @@ export class ProdutoRepository {
         this.repo = AppDataSource.getRepository(Produto);
     }
 
+    async buscarPorId(id: number): Promise<Produto | null> {
+        return this.repo.findOne( { where: { id } });
+    }
+    
     async salvar(produto: Produto): Promise<Produto> {
         return this.repo.save(produto);
     }

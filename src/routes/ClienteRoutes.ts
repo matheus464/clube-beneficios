@@ -7,6 +7,7 @@ const router = Router();
 const clienteController = new ClienteController();
 
 router.post("/clientes", (req, res) => clienteController.cadastrar(req,res));
+
 router.get("/clientes", autenticarJWT, verificarAdmin, (req, res) => {
     clienteController.listar(req, res);
 });

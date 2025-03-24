@@ -1,5 +1,6 @@
 import produtoRoutes from './routes/ProdutoRoutes';
 import clienteRoutes from './routes/ClienteRoutes';
+import compraRoutes from './routes/CompraRoutes';
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
@@ -16,6 +17,7 @@ app.use(express.json());
 app.use("/api", clienteRoutes);
 app.use("/api", produtoRoutes);
 app.use("/api", authRoutes);
+app.use("/api", compraRoutes);
 
 AppDataSource.initialize().then(() => {
     app.listen(process.env.PORT, () => 
