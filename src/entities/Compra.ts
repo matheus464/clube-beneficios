@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, ManyToOne, ManyToMany, JoinTable, CreateDateColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, ManyToOne, ManyToMany, JoinTable, CreateDateColumn, Column } from "typeorm";
 import { Produto } from "./Produto";
 import { Cliente } from "./Cliente";
 
@@ -20,4 +20,7 @@ export class Compra {
 
     @CreateDateColumn()
     data!: Date;
+
+    @Column( { default: "Pendente" })
+    status!: string;
 }

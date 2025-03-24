@@ -32,4 +32,20 @@ export class CompraService {
     async listarPorCliente(clienteId: number): Promise<Compra[]> {
         return this.compraRepo.listarPorCliente(clienteId);
     }
+
+    async pagarCompra(compraId: number, clienteId: number): Promise<Compra> {
+        const compra = await this.compraRepo.buscarPorId(compraId);
+        if (!compra) throw new Error("Compra não encontrada");
+
+        if (compra.cliente.id !== clienteId) {
+            throw new Error("Você só pode pagar suas próprias compras");
+        }
+
+        if (compra.status === "Pago") {
+            throw new Error("Compra já foi paga");
+        }
+
+        compra.status = "Pago";
+        return this.compraRepo.atualizar(compra);
+    }
 }
