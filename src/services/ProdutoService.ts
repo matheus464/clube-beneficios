@@ -17,4 +17,8 @@ export class ProdutoService {
     async listarProdutos(): Promise<Produto[]> {
         return this.produtoRepo.listarTodos();
     }
+
+    async listarComFiltros(query: any): Promise<{ data: Produto[]; total: number}> {
+        return this.produtoRepo.buscarComFiltros(query);
+    }
 }
