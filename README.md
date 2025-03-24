@@ -96,3 +96,14 @@ Verificação de permissão admin para rotas sensíveis
 Postman
 
 MySQL Workbench
+
+🧪 Testes
+Este projeto ainda não possui testes automatizados implementados (unitários ou de integração), conforme não exigido diretamente no escopo do desafio.
+
+Caso necessário, a aplicação pode ser facilmente adaptada para utilizar ferramentas como:
+
+Jest (para testes unitários)
+
+Supertest (para testes de endpoints)
+
+ts-mockito ou Sinon (para mocks)
