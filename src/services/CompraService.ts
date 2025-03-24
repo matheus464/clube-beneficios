@@ -11,15 +11,14 @@ export class CompraService {
     private clienteRepo = new ClienteRepository();
     private produtoRepo = new ProdutoRepository();
 
-    async registrarCompra(clienteId: number, produtosId: number[]): Promise<Compra> {
+    async registrarCompra(clienteId: number, produtosIds: number[]): Promise<Compra> {
         const cliente = await this.clienteRepo.buscarPorId(clienteId);
         if (!cliente) throw new Error("Cliente não encontrado");
 
-        const produtos: Produto[] = [];
-        for (const id of produtosId) {
-            const produto = await this.produtoRepo.buscarPorId(id);
-            if (!produto) throw new Error(`Produto com ID ${id} não encontrado`);
-            produtos.push(produto);
+        const produtos = await this.produtoRepo.buscarPorIds(produtosIds);
+
+        if (produtos.length !== produtosIds.length){
+            throw new Error("Um ou mais produtos não foram encontrados");
         }
 
         const compra = new Compra();

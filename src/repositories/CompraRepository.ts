@@ -24,4 +24,12 @@ export class CompraRepository {
     async atualizar(compra: Compra): Promise<Compra> {
         return this.repo.save(compra);
     }
+
+    async listarPagas(): Promise<Compra[]> {
+        return this.repo.find({
+            where: { status: "Pago" },
+            relations: ["cliente", "produtos"],
+            order: { data: "DESC" }
+        });
+    }
 }

@@ -2,6 +2,7 @@ import produtoRoutes from './routes/ProdutoRoutes';
 import clienteRoutes from './routes/ClienteRoutes';
 import compraRoutes from './routes/CompraRoutes';
 import pagamentoRoutes from './routes/PagamentoRoutes';
+import relatorioRoutes from './routes/RelatorioRoutes';
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
@@ -20,6 +21,7 @@ app.use("/api", produtoRoutes);
 app.use("/api", authRoutes);
 app.use("/api", compraRoutes);
 app.use("/api", pagamentoRoutes);
+app.use("/api", relatorioRoutes);
 
 AppDataSource.initialize().then(() => {
     app.listen(process.env.PORT, () => 
